@@ -1,20 +1,24 @@
 import csv
 from pathlib import Path
 
-# create a file path to the CSV file.
-file_paths = [Path.cwd() / "csv_reports"/ "Cah_on_Hand.csv"]
+# create a file path to the CSV files in the "csv_reports" directory.
+file_paths = Path.cwd() / "csv_reports"
+
+# use glob to get all CSV files in the directory
+csv_files = file_paths.glob("*.csv")
 
 cash_on_hand_records = []
 
 # iterate through each file path in the list
-for fp in file_paths:
+for fp in csv_files:
     # read the CSV file.
     with fp.open(mode="r", encoding="UTF-8", newline="") as file:
         reader = csv.reader(file)
         next(reader)  # skip header
 
-        # append cash on hand records into the list
-        cash_on_hand_records.extend([[int(row[0]), float(row[1])] for row in reader])
+
+    #append cash on hand records into the list
+    cash_on_hand_records.extend([[int(row[0]), float(row[1])] for row in reader])
 
 # Initialize variables for cash surplus
 highest_surplus_day = None
@@ -55,11 +59,18 @@ for i in range(1, len(cash_on_hand_records)):
 print(f"[CASH DEFICIT] CASH ON EACH DAY IS LOWER THAN THE PREVIOUS DAY:")
 print(f"[HIGHEST CASH DEFICIT] DAY: {lowest_deficit_day}, AMOUNT: SGD {abs (lowest_deficit_amount)}")
 
-
 #  Scenario 3
-# Calculate cash deficits and print the top 5
-cash_deficits = sorted([(record[0], record[1] - cash_on_hand_records[i - 1][1]) for i, record in enumerate(cash_on_hand_records) if i != 0 and record[1] < cash_on_hand_records[i - 1][1]], key=lambda x: x[1])
-for i in range(5):  # Print top 5 deficits
+# Calculate cash deficits 
+cash_deficits = [(record[0], record[1] - cash_on_hand_records[i - 1][1]) for i, record in enumerate(cash_on_hand_records) if i != 0 and record[1] < cash_on_hand_records[i - 1][1]]
+
+# Define a function to extract the deficit amount for sorting
+def cash_deficit_amount(item):
+    return item[0]
+
+# Sort the cash deficits in reverse order based on the deficit amount
+cash_deficits_sorted = sorted(cash_deficits, key = cash_deficit_amount, reverse = False)
+
+for i in range(min(20, len(cash_deficits_sorted))):  # Print top 5 deficits
     print(f"[CASH DEFICIT] DAY: {cash_deficits[i][0]}, AMOUNT: SGD {abs(cash_deficits[i][1])}")
 
 # Print the highest, 2nd, and 3rd cash deficit

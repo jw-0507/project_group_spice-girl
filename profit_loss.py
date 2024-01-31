@@ -2,7 +2,11 @@ import csv
 from pathlib import Path
 
 # create a file path to the CSV file.
-file_paths = [Path.cwd() / "csv_reports"/ "Profit_and_Loss.csv"]
+file_paths = [ 
+    Path.cwd() / "profit-and-loss-sgd (11-30).csv",
+    Path.cwd() / "profit-and-loss-sgd (31-60).csv",
+    Path.cwd() / "profit-and-loss-sgd (61-90).csv"
+]
 
 # create an empty list for overhead records
 profit_and_loss_record = []
@@ -61,16 +65,21 @@ print("[PROFIT DEFICIT] CASH ON EACH DAY IS LOWER THAN THE PREVIOUS DAY:")
 print(f"[HIGHEST PROFIT DEFICIT] DAY: {lowest_net_profit_deficit_day}, AMOUNT: SGD {abs(lowest_net_profit_deficit_amount)}") 
 
 # Scenario 3 
-# Calculate net profit deficits and print the top 5
-profit_deficits = sorted([(record[0], record[4] - profit_and_loss_record[i - 1][4]) for i, record in enumerate(profit_and_loss_record) if i != 0 and record[4] < profit_and_loss_record[i - 1][4]], key=lambda x: x[1])
-for i in range(5):  # Print top 5 deficits
-    print(f"[NET PROFIT DEFICIT] DAY: {profit_deficits[i][0]}, AMOUNT: SGD {abs(profit_deficits[i][1])}")
+# Calculate net profit deficits
+profit_deficits =[(record[0], record[4] - profit_and_loss_record[i - 1][4]) for i, record in enumerate(profit_and_loss_record) if i != 0 and record[4] < profit_and_loss_record[i - 1][4]]
 
+# Define a function to extract the deficit amount for sorting
+def profit_deficit_amount(item):
+    return item[1]
 
-for i in range(5):  # Print top 5 deficits
-    print(f"[NET PROFIT DEFICIT] DAY: {profit_deficits[i][0]}, AMOUNT: SGD {abs(profit_deficits[i][1])}")
+# Sort the profit deficits in reverse order based on the deficit amount
+profit_deficits_sorted = sorted(profit_deficits, key=profit_deficit_amount, reverse = False)
+
+# Print top 20 deficits
+for i in range(min(20, len(profit_deficits_sorted))):  
+    print(f"[NET PROFIT DEFICIT] DAY: {profit_deficits_sorted[i][0]}, AMOUNT: SGD {abs(profit_deficits_sorted[i][1])}")
 
 # Print the highest, 2nd, and 3rd net profit deficit
-print(f"[HIGHEST NET PROFIT DEFICIT] DAY: {profit_deficits[0][0]}, AMOUNT: SGD {abs(profit_deficits[0][1])}")
-print(f"[2ND HIGHEST NET PROFIT DEFICIT] DAY: {profit_deficits[1][0]}, AMOUNT: SGD {abs(profit_deficits[1][1])}")
-print(f"[3RD HIGHEST NET PROFIT DEFICIT] DAY: {profit_deficits[2][0]}, AMOUNT: SGD {abs(profit_deficits[2][1])}")
+print(f"[HIGHEST NET PROFIT DEFICIT] DAY: {profit_deficits_sorted[0][0]}, AMOUNT: SGD {abs(profit_deficits_sorted[0][1])}")
+print(f"[2ND HIGHEST NET PROFIT DEFICIT] DAY: {profit_deficits_sorted[1][0]}, AMOUNT: SGD {abs(profit_deficits_sorted[1][1])}")
+print(f"[3RD HIGHEST NET PROFIT DEFICIT] DAY: {profit_deficits_sorted[2][0]}, AMOUNT: SGD {abs(profit_deficits_sorted[2][1])}")
