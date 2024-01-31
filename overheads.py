@@ -2,7 +2,7 @@ from pathlib import Path
 import csv
 
 # create a file path to Csv file.
-file_path = Path.cwd() / "csv_reports" /"Overhead.csv"
+file_path = [Path.cwd() / "csv_reports" / "Overheads.csv"]
 
 # create an empty list for overhead records
 overhead_records = []
@@ -17,7 +17,7 @@ for fp in file_path:
         # append delivery records into the overhead records list
         for row in reader:
             # get the info for each record and append to the overhead records list
-            overhead_records.append([row[0], row[1]])
+            overhead_records.append([row[0], float (row[1])])
 
 # Scenario 1
 # the highest overheads in “overheads.csv”
