@@ -1,12 +1,8 @@
-import csv
 from pathlib import Path
+import csv
 
 # create a file path to the CSV file.
-file_paths = [ 
-    Path.cwd() / "profit-and-loss-sgd (11-30).csv",
-    Path.cwd() / "profit-and-loss-sgd (31-60).csv",
-    Path.cwd() / "profit-and-loss-sgd (61-90).csv"
-]
+file_paths = [Path.cwd() /"csv_reports"/"Profits_and_Loss.csv"]
 
 # create an empty list for overhead records
 profit_and_loss_record = []
@@ -31,8 +27,7 @@ for i in range(1, len(profit_and_loss_record)):
     current_day, current_amount = profit_and_loss_record[i][0], profit_and_loss_record[i][4]
     previous_day, previous_amount = profit_and_loss_record[i-1][0], profit_and_loss_record[i-1][4]
 
-    # net_profit_surplus_amount = current_amount - previous_amount
-    # if current_amount > previous_amount:
+    # Calculate the profit surplus amount
     net_profit_surplus_amount = current_amount - previous_amount
     if net_profit_surplus_amount > highest_net_profit_surplus_amount:
         highest_net_profit_surplus_amount = net_profit_surplus_amount
