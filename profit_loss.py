@@ -71,7 +71,7 @@ def profit_deficit_amount(item):
 profit_deficits_sorted = sorted(profit_deficits, key=profit_deficit_amount, reverse = False)
 
 # Print top 20 deficits
-for i in range(min(20, len(profit_deficits_sorted))):  
+for i in range(min(15,len(profit_deficits_sorted))):  
     print(f"[NET PROFIT DEFICIT] DAY: {profit_deficits_sorted[i][0]}, AMOUNT: SGD {abs(profit_deficits_sorted[i][1])}")
 
 # Print the highest, 2nd, and 3rd net profit deficit

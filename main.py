@@ -47,7 +47,7 @@ with file_path.open(mode="w", encoding="UTF-8", newline="") as f:
     f.write(f"[3RD HIGHEST CASH DEFICIT] DAY: {cash_on_hand.cash_deficits_sorted[2][0]}, AMOUNT: SGD {abs(cash_on_hand.cash_deficits_sorted[2][1])}\n")
 
 #write top 20 profit deficits
-    for i in range(min(20, len(profit_loss.profit_deficits_sorted))):  
+    for i in range(min(15, len(profit_loss.profit_deficits_sorted))):  
         f.write(f"[NET PROFIT DEFICIT] DAY: {profit_loss.profit_deficits_sorted[i][0]}, AMOUNT: SGD {abs(profit_loss.profit_deficits_sorted[i][1])}\n")
 
 #.write the highest, 2nd, and 3rd net profit deficit
