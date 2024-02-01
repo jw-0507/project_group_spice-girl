@@ -7,7 +7,7 @@ import cash_on_hand
 file_path = Path.cwd() / "summary_report.txt"
 
 # Open the file for writing
-with file_path.open(mode="r", encoding="UTF-8", newline="") as f:
+with file_path.open(mode="w", encoding="UTF-8", newline="") as f:
     # scenario 1
     # Write highest overhead
     f.write(f"\nHighest Overhead: {overheads.highest_overhead_category}, AMOUNT: SGD {overheads.highest_value}%\n")
@@ -54,4 +54,3 @@ with file_path.open(mode="r", encoding="UTF-8", newline="") as f:
     f.write(f"[HIGHEST NET PROFIT DEFICIT] DAY: {profit_loss.profit_deficits_sorted[0][0]}, AMOUNT: SGD {abs(profit_loss.profit_deficits_sorted[0][1])}\n")
     f.write(f"[2ND HIGHEST NET PROFIT DEFICIT] DAY: {profit_loss.profit_deficits_sorted[1][0]}, AMOUNT: SGD {abs(profit_loss.profit_deficits_sorted[1][1])}\n")
     f.write(f"[3RD HIGHEST NET PROFIT DEFICIT] DAY: {profit_loss.profit_deficits_sorted[2][0]}, AMOUNT: SGD {abs(profit_loss.profit_deficits_sorted[2][1])}\n")
-print("Summary report has been written to summary_report.txt")
